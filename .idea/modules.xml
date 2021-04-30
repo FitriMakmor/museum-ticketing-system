@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../Lab/Lab.iml" filepath="$PROJECT_DIR$/../../Lab/Lab.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MuseumTicketingSystem.iml" filepath="$PROJECT_DIR$/MuseumTicketingSystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/museum-control-system.iml" filepath="$PROJECT_DIR$/museum-control-system.iml" />
     </modules>
   </component>
 </project>
