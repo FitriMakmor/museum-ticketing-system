@@ -23,7 +23,7 @@ public class Main {
                         museum.openGates();
                         gatesOpened = true;
                     }
-                    if (museum.getCurrentTime() < CLOSE_TIME - 100) {
+                    if (museum.getCurrentTime() < CLOSE_TIME - 100) { //ticket can be purchased until one hour before closing time (hence the -100)
                         museum.buyTicket(r.nextInt(4) + 1);
                         Thread.sleep((r.nextInt(4) + 1) * 100);
                     } else {

@@ -11,6 +11,9 @@ public class Turnstile implements Runnable {
     private boolean isMuseumClear;
     private final Lock lock;
     private final Condition hasQueue;
+
+
+
     private ConcurrentLinkedQueue<Visitor> waitingVisitors = new ConcurrentLinkedQueue<Visitor>();
     private Random r = new Random();
     private Gate gate;
@@ -47,10 +50,11 @@ public class Turnstile implements Runnable {
                 try {
                     if (isEntrance && gate.getMuseumVisitorSize() < gate.getMuseum().getVisitorsAtOnce()) {
                         Visitor currentVisitor = waitingVisitors.peek();
-                        boolean isSuccessful = currentVisitor.enterMuseum(this);
-                        if (isSuccessful) {
-                            waitingVisitors.poll();
-                        }
+                        gate.getMuseum().compareTime(currentVisitor, this);
+                        //boolean isSuccessful = currentVisitor.enterMuseum(this);
+                        //if (isSuccessful) {
+                         //   waitingVisitors.poll();
+                        //}
                     } else if (!isEntrance) {
                         Visitor currentVisitor = waitingVisitors.poll();
                         currentVisitor.exitMuseum(this);
@@ -96,6 +100,10 @@ public class Turnstile implements Runnable {
         } finally {
             lock.unlock();
         }
+    }
+
+    public ConcurrentLinkedQueue<Visitor> getWaitingVisitors() {
+        return waitingVisitors;
     }
 
 

@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Visitor implements Runnable {
     Museum museum;
     Ticket ticket;
-    int duration;
+    private int duration;
     public boolean isInside = false;
     private final Lock lock;
     private final Condition hasEntered;
@@ -40,9 +40,11 @@ public class Visitor implements Runnable {
         }
     }
 
-    public synchronized boolean enterMuseum(Turnstile turnstile) {
-        return museum.enterMuseum(this, turnstile);
-    }
+//    public synchronized void enterMuseum(Turnstile turnstile) {
+//        museum.enterMuseum(this, turnstile);
+//    }
+
+
 
     public synchronized void exitMuseum(Turnstile turnstile) {
         museum.exitMuseum(this, turnstile);
@@ -55,6 +57,13 @@ public class Visitor implements Runnable {
         } finally {
             lock.unlock();
         }
+    }
 
+    public int getDuration(){
+        return duration;
+    }
+
+    public String getTicketID(){
+        return ticket.getTicketID();
     }
 }

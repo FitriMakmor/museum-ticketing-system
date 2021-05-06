@@ -2,15 +2,15 @@ package com.company;
 
 public class Clock implements Runnable {
     private int currentTime;
-    private int closeTime;
+    private int endTime;
 
-    public Clock(int openTime, int closeTime) {
-        currentTime = openTime;
-        this.closeTime = closeTime;
+    public Clock(int startTime, int closeTime) {
+        currentTime = startTime;
+        endTime = closeTime+200; //2 hours after museum closing time
     }
 
     public void run(){
-        while(currentTime<(closeTime+200)){
+        while(currentTime<endTime){
             try {
                 Thread.sleep(100);
                 if(currentTime%100 < 59){

@@ -17,6 +17,7 @@ public class Museum {
     private Thread tClock;
     private boolean isClosed;
     private int remainingTickets;
+    private int earliestTime;
     private List<Ticket> ticketController = Collections.synchronizedList(new ArrayList<>());
     private List<Visitor> visitorController = Collections.synchronizedList(new ArrayList<>());
     private Map<Visitor, Thread> visitorThreadMap = Collections.synchronizedMap(new HashMap<>());
@@ -28,6 +29,7 @@ public class Museum {
         this.tClock = new Thread(clock);
         this.remainingTickets = maxVisitors;
         this.runningNumber = 1;
+        this.earliestTime = Integer.MAX_VALUE;
         tClock.start();
     }
 
@@ -40,7 +42,7 @@ public class Museum {
                 Ticket ticket = new Ticket(ticketID, purchaseTime);
                 Visitor visitor = new Visitor(this, ticket, r.nextInt(101) + 50); //randomize 50-150 mins
                 Thread vThread = new Thread(visitor);
-                System.out.printf("%04d Ticket %s sold.\n", clock.getCurrentTime(), ticket.ticketID);
+                System.out.printf("%04d Ticket %s sold.\n", clock.getCurrentTime(), ticket.getTicketID());
                 visitorThreadMap.put(visitor, vThread);
                 vThread.start();
                 ticketController.add(ticket);
@@ -52,17 +54,35 @@ public class Museum {
         System.out.println("Remaining tickets: " + remainingTickets);
     }
 
-    public synchronized boolean enterMuseum(Visitor visitor, Turnstile turnstile) {
-        if (visitorController.size() < 100) {
+    public synchronized void compareTime(Visitor visitor, Turnstile turnstile){
+        if(visitor.ticket.getPurchaseTimeStamp()<earliestTime){
+            earliestTime = visitor.ticket.getPurchaseTimeStamp();
+        }
+
+        try{
+            wait(10);
+        }catch(InterruptedException ex){
+
+        }
+        notifyAll();
+        if(earliestTime == visitor.ticket.getPurchaseTimeStamp()){
+            enterMuseum(visitor, turnstile);
+            earliestTime = Integer.MAX_VALUE;
+        }
+    }
+
+    public synchronized void enterMuseum(Visitor visitor, Turnstile turnstile) {
+
+        if (visitorController.size() < visitorsAtOnce) {
             visitorController.add(visitor);
             visitor.isInside = true;
             visitor.hasEntered();
-            System.out.printf("%04d Ticket %s entered the museum through T" + (turnstile.getTurnstileNum() + 1) + " " + turnstile.getGateName()
-                            + ". Current Visitors inside the Museum (enter): %d\n",
-                    clock.getCurrentTime(), visitor.ticket.ticketID, visitorController.size());
-            return true;
+            System.out.printf("%04d Ticket %s purchased at %04d entered the museum through T" + (turnstile.getTurnstileNum() + 1) + " " + turnstile.getGateName()
+                            + ", staying for " + visitor.getDuration() + " minutes. Current Visitors inside the Museum (enter): %d\n",
+                    clock.getCurrentTime(), visitor.getTicketID(), visitor.ticket.getPurchaseTimeStamp(), visitorController.size());
+            turnstile.getWaitingVisitors().poll();
         } else {
-            return false;
+
         }
     }
 
@@ -71,11 +91,12 @@ public class Museum {
         visitorThreadMap.remove(visitor);
         System.out.printf("%04d Ticket %s exited the museum through T" + (turnstile.getTurnstileNum() + 1)
                         + " " + turnstile.getGateName() + ". Current Visitors inside the Museum (exit): %d\n",
-                clock.getCurrentTime(), visitor.ticket.ticketID, visitorController.size());
-
+                clock.getCurrentTime(), visitor.getTicketID(), visitorController.size());
         if (visitorThreadMap.isEmpty() && visitorController.isEmpty()) {
             tClock.interrupt();
             setMuseumIsClear();
+            System.out.println("Museum is clear, remaining number of visitors in the museum: " +
+                    visitorController.size());
         }
     }
 
