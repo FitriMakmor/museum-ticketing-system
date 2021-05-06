@@ -12,7 +12,13 @@ public class Visitor implements Runnable {
     private final Lock lock;
     private final Condition hasEntered;
 
-
+    /**
+     * Constructor
+     *
+     * @param museum   the museum
+     * @param ticket   visitor's ticket
+     * @param duration visitor's duration of staying
+     */
     public Visitor(Museum museum, Ticket ticket, int duration) {
         this.ticket = ticket;
         this.museum = museum;
@@ -21,6 +27,10 @@ public class Visitor implements Runnable {
         hasEntered = lock.newCondition();
     }
 
+    /**
+     * Visitor will choose a gate to enter and wait for the signal if the visitor has entered the museum
+     * Visitor will stay in the museum according to their duration and proceed with exiting the museum
+     */
     @Override
     public void run() {
         lock.lock();
@@ -34,22 +44,24 @@ public class Visitor implements Runnable {
 
                 }
             }
-            museum.chooseGate(this, false);
+            museum.chooseGate(this, false); //visitor choose gate to exit
         } finally {
             lock.unlock();
         }
     }
 
-//    public synchronized void enterMuseum(Turnstile turnstile) {
-//        museum.enterMuseum(this, turnstile);
-//    }
-
-
-
+    /**
+     * Method for the visitor to exit museum after choosing the turnstile
+     *
+     * @param turnstile to pass through
+     */
     public synchronized void exitMuseum(Turnstile turnstile) {
         museum.exitMuseum(this, turnstile);
     }
 
+    /**
+     * Method to signal the visitor that the visitor has entered the museum
+     */
     public void hasEntered() {
         lock.lock();
         try {
@@ -59,11 +71,21 @@ public class Visitor implements Runnable {
         }
     }
 
-    public int getDuration(){
+    /**
+     * Getter to get the visitor's duration of staying
+     *
+     * @return duration
+     */
+    public int getDuration() {
         return duration;
     }
 
-    public String getTicketID(){
+    /**
+     * Getter to get the ticket's ID
+     *
+     * @return ticket ID
+     */
+    public String getTicketID() {
         return ticket.getTicketID();
     }
 }

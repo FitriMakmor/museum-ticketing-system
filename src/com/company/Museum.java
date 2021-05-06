@@ -22,6 +22,14 @@ public class Museum {
     private List<Visitor> visitorController = Collections.synchronizedList(new ArrayList<>());
     private Map<Visitor, Thread> visitorThreadMap = Collections.synchronizedMap(new HashMap<>());
 
+    /**
+     * Constructor
+     *
+     * @param startTime      Clock's start time
+     * @param closeTime      Museum's close time
+     * @param maxVisitors    Maximum number of visitors for the day
+     * @param visitorsAtOnce Maximum number of visitors at one time
+     */
     public Museum(int startTime, int closeTime, int maxVisitors, int visitorsAtOnce) {
         System.out.println("Museum is created");
         this.clock = new Clock(startTime, closeTime);
@@ -33,6 +41,13 @@ public class Museum {
         tClock.start();
     }
 
+    /**
+     * Method for visitors to purchase tickets in bulk (1-4).
+     * Approach : method will perform synchronized operation of buying tickets.
+     *
+     * @param ticketAmount Number of tickets being bought at one time.
+     * @return void
+     */
     public synchronized void buyTicket(int ticketAmount) {
         if (remainingTickets >= ticketAmount) {
             int purchaseTime = clock.getCurrentTime();
@@ -54,25 +69,38 @@ public class Museum {
         System.out.println("Remaining tickets: " + remainingTickets);
     }
 
-    public synchronized void compareTime(Visitor visitor, Turnstile turnstile){
-        if(visitor.ticket.getPurchaseTimeStamp()<earliestTime){
+    /**
+     * Method to compare and select which visitor should enter from competing turnstiles (possibility of 8 competitors in total).
+     * Approach : method will perform synchronized operation of comparison between different visitor's purchaseTimeStamp.
+     *
+     * @param visitor   the visitor at the front-most queue of the represented turnstile.
+     * @param turnstile the turnstile which corresponds to the visitor being passed in.
+     * @return void
+     */
+    public synchronized void compareTime(Visitor visitor, Turnstile turnstile) {
+        if (visitor.ticket.getPurchaseTimeStamp() < earliestTime) {
             earliestTime = visitor.ticket.getPurchaseTimeStamp();
         }
-
-        try{
+        try {
             wait(10);
-        }catch(InterruptedException ex){
-
+        } catch (InterruptedException ex) {
         }
         notifyAll();
-        if(earliestTime == visitor.ticket.getPurchaseTimeStamp()){
+        if (earliestTime == visitor.ticket.getPurchaseTimeStamp()) {
             enterMuseum(visitor, turnstile);
             earliestTime = Integer.MAX_VALUE;
         }
     }
 
+    /**
+     * Method to allow the winning visitor in compareTime() to enter the museum.
+     * Approach : method will perform synchronized operation to allow the visitor to enter the museum without exceeding max size.
+     *
+     * @param visitor   the winning visitor acquired from compareTime().
+     * @param turnstile the turnstile which corresponds to the winning visitor.
+     * @return void
+     */
     public synchronized void enterMuseum(Visitor visitor, Turnstile turnstile) {
-
         if (visitorController.size() < visitorsAtOnce) {
             visitorController.add(visitor);
             visitor.isInside = true;
@@ -86,6 +114,14 @@ public class Museum {
         }
     }
 
+    /**
+     * Method to allow the visitor to exit the museum.
+     * Approach : method will remove the visitor from both the controller and the thread map.
+     *
+     * @param visitor   the visitor exiting the museum.
+     * @param turnstile the turnstile used by the visitor to exit the museum.
+     * @return void
+     */
     public synchronized void exitMuseum(Visitor visitor, Turnstile turnstile) {
         visitorController.remove(visitor);
         visitorThreadMap.remove(visitor);
@@ -100,6 +136,12 @@ public class Museum {
         }
     }
 
+    /**
+     * Method to force the visitors in the museum to exit after closing time.
+     * Approach : method will interrupt all sleeping visitor threads in the museum.
+     *
+     * @return void
+     */
     public void announceExit() {
         System.out.println(" Announcing Exit!");
         List<Thread> list = new ArrayList<Thread>(visitorThreadMap.values());
@@ -109,6 +151,12 @@ public class Museum {
         isClosed = true;
     }
 
+    /**
+     * Method to randomly decide which gate the visitor will use to enter/exit the museum.
+     * Approach : method will remove the visitor's ticket from the ticketController and then select a gate for the visitor.
+     *
+     * @return void
+     */
     public void chooseGate(Visitor visitor, boolean isEntrance) {
         ticketController.remove(visitor.ticket);
         boolean chosenGate = r.nextBoolean(); //Randomly decides which gate to choose
@@ -127,6 +175,9 @@ public class Museum {
         }
     }
 
+    /**
+     * Method to open all gates when the museum is opened
+     */
     public void openGates() {
         southEntranceGate.openGates();
         northEntranceGate.openGates();
@@ -134,6 +185,9 @@ public class Museum {
         westExitGate.openGates();
     }
 
+    /**
+     * Method to clear the museum and close all gates
+     */
     public void setMuseumIsClear() {
         southEntranceGate.setMuseumClear();
         northEntranceGate.setMuseumClear();
@@ -141,22 +195,47 @@ public class Museum {
         westExitGate.setMuseumClear();
     }
 
+    /**
+     * Getter
+     *
+     * @return Museum's "Closed" status
+     */
     public boolean getIsClosed() {
         return isClosed;
     }
 
+    /**
+     * Getter method to get the remaining museum tickets
+     *
+     * @return remaining ticket
+     */
     public int getRemainingTickets() {
         return remainingTickets;
     }
 
+    /**
+     * Getter to get the clock's current time
+     *
+     * @return current time
+     */
     public int getCurrentTime() {
         return clock.getCurrentTime();
     }
 
+    /**
+     * Getter to get the maximum number of visitors at one time
+     *
+     * @return max number of visitors that can enter the museum
+     */
     public int getVisitorsAtOnce() {
         return visitorsAtOnce;
     }
 
+    /**
+     * Getter to get the list of visitors currently in the museum
+     *
+     * @return visitor controller list
+     */
     public List<Visitor> getVisitorController() {
         return visitorController;
     }

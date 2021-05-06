@@ -3,6 +3,16 @@ package com.company;
 import java.util.Random;
 
 public class Main {
+
+    /**
+     * Driver method to:
+     * 1. Initialize constant variables.
+     * 2. Create the Museum instance.
+     * 3. Run loop which constantly attempts to perform ticket transactions while checking whether the museum has reached closing time.
+     * 4. Inform that the museum has been closed.
+     * @param args
+     */
+
     public static void main(String[] args) {
 
         final int START_TIME = 800;
@@ -39,12 +49,11 @@ public class Main {
 
         if (museum.getCurrentTime() >= CLOSE_TIME) {
             System.out.print("Museum has been closed!");
-//            museum.closeGates();
             museum.announceExit();
         } else {
             System.out.println("Error: attempting to close Museum before closing time.");
         }
-        
+
     }
 
 }
