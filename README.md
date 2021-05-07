@@ -1,4 +1,4 @@
-# museum-ticketing-system
+# museum-ticketing-system :classical_building: :label: :walking_woman: :walking_man:
 A Museum Ticketing and Gate Control System using Concurrent / Multithreaded Programming in Java
 
 ## Project Description
