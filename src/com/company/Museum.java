@@ -52,8 +52,7 @@ public class Museum {
         if (remainingTickets >= ticketAmount) {
             int purchaseTime = clock.getCurrentTime();
             for (int i = 0; i < ticketAmount; i++) {
-                String ticketID = "T" + String.format("%04d", runningNumber);
-                runningNumber++;
+                String ticketID = "T" + String.format("%04d", runningNumber++);
                 Ticket ticket = new Ticket(ticketID, purchaseTime);
                 Visitor visitor = new Visitor(this, ticket, r.nextInt(101) + 50); //randomize 50-150 mins
                 Thread vThread = new Thread(visitor);
@@ -105,12 +104,8 @@ public class Museum {
             visitorController.add(visitor);
             visitor.isInside = true;
             visitor.hasEntered();
-            System.out.printf("%04d Ticket %s purchased at %04d entered the museum through T" + (turnstile.getTurnstileNum() + 1) + " " + turnstile.getGateName()
-                            + ", staying for " + visitor.getDuration() + " minutes. Current Visitors inside the Museum (enter): %d\n",
-                    clock.getCurrentTime(), visitor.getTicketID(), visitor.ticket.getPurchaseTimeStamp(), visitorController.size());
+            System.out.printf("%04d Ticket %s purchased at %04d entered the museum through T" + (turnstile.getTurnstileNum() + 1) + " " + turnstile.getGateName() + ", staying for " + visitor.getDuration() + " minutes. Current Visitors inside the Museum (enter): %d\n", clock.getCurrentTime(), visitor.getTicketID(), visitor.ticket.getPurchaseTimeStamp(), visitorController.size());
             turnstile.getWaitingVisitors().poll();
-        } else {
-
         }
     }
 

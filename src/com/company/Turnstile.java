@@ -62,10 +62,10 @@ public class Turnstile implements Runnable {
                 try {
                     if (isEntrance && gate.getMuseumVisitorSize() < gate.getMuseum().getVisitorsAtOnce()) {
                         Visitor currentVisitor = waitingVisitors.peek();
-                        gate.getMuseum().compareTime(currentVisitor, this);
+                        gate.getMuseum().compareTime(currentVisitor, this); // enter
                     } else if (!isEntrance) {
                         Visitor currentVisitor = waitingVisitors.poll();
-                        currentVisitor.exitMuseum(this);
+                        currentVisitor.exitMuseum(this); //
                     }
                 } catch (Exception e) {
                 }
