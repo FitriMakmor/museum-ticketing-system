@@ -88,4 +88,8 @@ public class Visitor implements Runnable {
     public String getTicketID() {
         return ticket.getTicketID();
     }
+
+    public int getTicketTimeStamp() {
+        return ticket.getPurchaseTimeStamp();
+    }
 }

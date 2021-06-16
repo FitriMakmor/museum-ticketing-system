@@ -5,6 +5,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import com.company.controllers.MonitorController;
+import javafx.application.Platform;
 
 public class Turnstile implements Runnable {
     private boolean isEntrance;
@@ -16,6 +18,11 @@ public class Turnstile implements Runnable {
     private Random r = new Random();
     private Gate gate;
     private int turnstileNum;
+    private int gateIndex;
+    private int turnstileIndex;
+
+    private MonitorController mc;
+
 
     /**
      * Constructor
@@ -23,12 +30,15 @@ public class Turnstile implements Runnable {
      * @param isEntrance Set the entrance or exit behaviour
      * @param num        set the turnstile number
      */
-    public Turnstile(Gate gate, boolean isEntrance, int num) {
+    public Turnstile(MonitorController mc, int gateIndex, int turnstileIndex, Gate gate, boolean isEntrance, int num) {
         this.gate = gate;
+        this.gateIndex = gateIndex;
+        this.turnstileIndex = turnstileIndex;
         lock = new ReentrantLock();
         hasQueue = lock.newCondition();
         this.isEntrance = isEntrance;
         this.turnstileNum = num;
+        this.mc = mc;
     }
 
     /**
@@ -65,6 +75,13 @@ public class Turnstile implements Runnable {
                         gate.getMuseum().compareTime(currentVisitor, this); // enter
                     } else if (!isEntrance) {
                         Visitor currentVisitor = waitingVisitors.poll();
+                        Thread.sleep(500);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                mc.removeTurnstileList(currentVisitor.getTicketID(), gateIndex, turnstileIndex);
+                            }
+                        });
                         currentVisitor.exitMuseum(this); //
                     }
                 } catch (Exception e) {
@@ -93,12 +110,21 @@ public class Turnstile implements Runnable {
      */
     public void addToQueue(Visitor visitor) {
         lock.lock();
-        try {
-            waitingVisitors.add(visitor);
-        } finally {
-            hasQueue.signal();
-            lock.unlock();
-        }
+            try {
+                waitingVisitors.add(visitor);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!isEntrance){
+                            mc.removeMuseumList(visitor.getTicketID()+" (Purchased at "+String.format("%04d",visitor.getTicketTimeStamp())+", staying for "+ visitor.getDuration()+" minutes)");
+                        }
+                        mc.addTurnstileList(visitor.getTicketID(),gateIndex, turnstileIndex);
+                    }
+                });
+            } finally {
+                hasQueue.signal();
+                lock.unlock();
+            }
     }
 
     /**
@@ -141,6 +167,14 @@ public class Turnstile implements Runnable {
      */
     public ConcurrentLinkedQueue<Visitor> getWaitingVisitors() {
         return waitingVisitors;
+    }
+
+    public int getGateIndex() {
+        return gateIndex;
+    }
+
+    public int getTurnstileIndex() {
+        return turnstileIndex;
     }
 
 

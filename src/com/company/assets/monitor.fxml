@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="84.0" style="-fx-background-color: white;">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Monitoring Dashboard">
+               <font>
+                  <Font name="Inter Medium" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="48.0" />
+               </HBox.margin>
+            </Text>
+            <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Text fx:id="clockText" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00" textAlignment="CENTER">
+               <font>
+                  <Font name="Inter Medium" size="48.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="16.0" />
+               </HBox.margin>
+            </Text>
+
+         </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.20000000298023224" />
+               </color>
+            </DropShadow>
+         </effect>
+      </HBox>
+      <VBox prefHeight="639.0" prefWidth="1289.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="97.0" prefWidth="1280.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="139.0" prefWidth="170.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@png/museum.png"/>
+                                 </image>
+                              </ImageView>
+                              <Text fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="Visitors in museum">
+                                 <font>
+                                    <Font name="Inter Medium" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="12.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <Text fx:id="visitorsCountText" strokeType="OUTSIDE" strokeWidth="0.0" text="900">
+                           <font>
+                              <Font name="Inter Medium" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="12.0" />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets left="24.0" right="24.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="48.0" />
+                     </HBox.margin>
+                     <effect>
+                        <DropShadow height="12.0" offsetY="2.0" radius="5.5" width="12.0">
+                           <color>
+                              <Color opacity="0.10000000149011612" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="139.0" prefWidth="170.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@png/ticket.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="Tickets remaining">
+                                 <font>
+                                    <Font name="Inter Medium" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="12.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <Text fx:id="ticketRemainingText" strokeType="OUTSIDE" strokeWidth="0.0" text="900">
+                           <font>
+                              <Font name="Inter Medium" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="12.0" />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets left="24.0" right="24.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="24.0" />
+                     </HBox.margin>
+                     <effect>
+                        <DropShadow height="12.0" offsetY="2.0" radius="5.5" width="12.0">
+                           <color>
+                              <Color opacity="0.10000000149011612" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="139.0" prefWidth="170.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@png/sold.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="Tickets sold">
+                                 <font>
+                                    <Font name="Inter Medium" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="12.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <Text fx:id="ticketSoldText" strokeType="OUTSIDE" strokeWidth="0.0" text="900">
+                           <font>
+                              <Font name="Inter Medium" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="12.0" />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets left="24.0" right="24.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="24.0" />
+                     </HBox.margin>
+                     <effect>
+                        <DropShadow height="12.0" offsetY="2.0" radius="5.5" width="12.0">
+                           <color>
+                              <Color opacity="0.10000000149011612" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="24.0" />
+               </VBox.margin>
+            </HBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Queues">
+               <font>
+                  <Font name="Inter Medium" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="24.0" left="48.0" right="16.0" top="24.0" />
+               </VBox.margin>
+            </Text>
+            <ScrollPane style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+               <content>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <VBox prefHeight="400.0" prefWidth="512.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@png/turnstiles.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="NORTH ENTRANCE">
+                                       <font>
+                                          <Font name="Inter Medium" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="12.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 1">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="nnTurnstileOneList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 2">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="nnTurnstileTwoList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 3">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="nnTurnstileThreeList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 4">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="nnTurnstileFourList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets left="48.0" />
+                           </HBox.margin>
+                           <effect>
+                              <DropShadow height="12.0" offsetY="2.0" radius="5.5" width="12.0">
+                                 <color>
+                                    <Color opacity="0.10000000149011612" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </VBox>
+                        <VBox prefHeight="400.0" prefWidth="512.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@png/turnstiles.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="SOUTH ENTRANCE">
+                                       <font>
+                                          <Font name="Inter Medium" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="12.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 1">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="snTurnstileOneList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 2">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="snTurnstileTwoList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 3">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="snTurnstileThreeList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 4">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="snTurnstileFourList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                           <effect>
+                              <DropShadow height="12.0" offsetY="2.0" radius="5.5" width="12.0">
+                                 <color>
+                                    <Color opacity="0.10000000149011612" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </VBox>
+                        <VBox prefHeight="400.0" prefWidth="512.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@png/museum.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="MUSEUM">
+                                       <font>
+                                          <Font name="Inter Medium" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="12.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Current Visitors">
+                                       <font>
+                                          <Font name="Inter Medium" size="12.0" />
+                                       </font>
+                                    </Text>
+                                    <ListView fx:id="museumVisitorsList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                           </padding>
+                           <effect>
+                              <DropShadow height="12.0" offsetY="2.0" radius="5.5" width="12.0">
+                                 <color>
+                                    <Color opacity="0.10000000149011612" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="400.0" prefWidth="512.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@png/turnstiles.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="EAST EXIT">
+                                       <font>
+                                          <Font name="Inter Medium" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="12.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 1">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="exTurnstileOneList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 2">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="exTurnstileTwoList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 3">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="exTurnstileThreeList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 4">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="exTurnstileFourList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                           <effect>
+                              <DropShadow height="12.0" offsetY="2.0" radius="5.5" width="12.0">
+                                 <color>
+                                    <Color opacity="0.10000000149011612" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </VBox>
+                        <VBox prefHeight="256.0" prefWidth="512.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <ImageView fitHeight="33.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@png/turnstiles.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="WEST EXIT">
+                                       <font>
+                                          <Font name="Inter Medium" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="12.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 1">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="wxTurnstileOneList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 2">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="wxTurnstileTwoList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 3">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="wxTurnstileThreeList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turnstile 4">
+                                             <font>
+                                                <Font name="Inter Medium" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ListView fx:id="wxTurnstileFourList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                           </padding>
+                           <effect>
+                              <DropShadow height="12.0" offsetY="2.0" radius="5.5" width="12.0">
+                                 <color>
+                                    <Color opacity="0.10000000149011612" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="24.0" />
+                     </padding>
+                  </HBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</VBox>

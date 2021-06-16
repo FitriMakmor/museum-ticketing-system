@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="44.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Downloads/visitor.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="ticketIdText" strokeType="OUTSIDE" strokeWidth="0.0" text="ticket_ID">
+         <HBox.margin>
+            <Insets left="24.0" />
+         </HBox.margin>
+         <font>
+            <Font name="Inter Medium" size="14.0" />
+         </font>
+      </Text>
+   </children>
+   <padding>
+      <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+   </padding>
+</HBox>

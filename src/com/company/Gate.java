@@ -1,9 +1,17 @@
 package com.company;
 
+import com.company.controllers.MonitorController;
+
+import java.util.Random;
+
 public class Gate {
     private String name;
     private Turnstile[] turnstiles = new Turnstile[4];
     private Museum museum;
+    private MonitorController mc;
+    private int gateIndex;
+    private int turnstileCounter = 0;
+    private Random r = new Random();
 
 
     /**
@@ -13,10 +21,13 @@ public class Gate {
      * @param isEntrance To determine whether the gate is either entrance or exit
      * @param name       To assign a name to the gate
      */
-    public Gate(Museum museum, boolean isEntrance, String name) {
+    public Gate(MonitorController mc, int gateIndex, Museum museum, boolean isEntrance, String name) {
+        this.turnstileCounter = 0;
+        this.mc = mc;
+        this.gateIndex = gateIndex;
         this.name = name;
         for (int i = 0; i < turnstiles.length; i++) {
-            turnstiles[i] = new Turnstile(this, isEntrance, i);
+            turnstiles[i] = new Turnstile(mc, gateIndex, i, this, isEntrance, i);
         }
         this.museum = museum;
     }
@@ -29,14 +40,11 @@ public class Gate {
      */
     public void decideTurnstile(Visitor visitor) {
         int min = 1000;
-        Turnstile chosenTurnstile = null;
-        for (Turnstile turnstile : turnstiles) {
-            int queueLength = turnstile.getQueueLength();
-            if (queueLength < min) {
-                min = queueLength;
-                chosenTurnstile = turnstile;
-            }
+        Turnstile chosenTurnstile = turnstiles[turnstileCounter++];
+        if (turnstileCounter > 3) {
+            turnstileCounter = 0;
         }
+
         chosenTurnstile.addToQueue(visitor);
     }
 

@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.controllers.MonitorController;
+import javafx.application.Platform;
+
 import java.util.*;
 
 public class Museum {
@@ -8,19 +11,22 @@ public class Museum {
     private int visitorsAtOnce;
     private int runningNumber;
 
-    private Gate southEntranceGate = new Gate(this, true, "SN Gate");
-    private Gate northEntranceGate = new Gate(this, true, "NN Gate");
-    private Gate eastExitGate = new Gate(this, false, "EX Gate");
-    private Gate westExitGate = new Gate(this, false, "WX Gate");
+    private Gate southEntranceGate;
+    private Gate northEntranceGate;
+    private Gate eastExitGate;
+    private Gate westExitGate;
 
     private Clock clock;
     private Thread tClock;
     private boolean isClosed;
+    private int availableTickets;
     private int remainingTickets;
     private int earliestTime;
     private List<Ticket> ticketController = Collections.synchronizedList(new ArrayList<>());
     private List<Visitor> visitorController = Collections.synchronizedList(new ArrayList<>());
     private Map<Visitor, Thread> visitorThreadMap = Collections.synchronizedMap(new HashMap<>());
+
+    private MonitorController mc;
 
     /**
      * Constructor
@@ -30,15 +36,22 @@ public class Museum {
      * @param maxVisitors    Maximum number of visitors for the day
      * @param visitorsAtOnce Maximum number of visitors at one time
      */
-    public Museum(int startTime, int closeTime, int maxVisitors, int visitorsAtOnce) {
+    public Museum(MonitorController mc, int startTime, int closeTime, int maxVisitors, int visitorsAtOnce) {
+        this.mc = mc;
         System.out.println("Museum is created");
-        this.clock = new Clock(startTime, closeTime);
+        this.clock = new Clock(mc, startTime, closeTime);
         this.visitorsAtOnce = visitorsAtOnce;
         this.tClock = new Thread(clock);
+        this.availableTickets = maxVisitors;
         this.remainingTickets = maxVisitors;
         this.runningNumber = 1;
         this.earliestTime = Integer.MAX_VALUE;
         tClock.start();
+
+        southEntranceGate = new Gate(mc, 0, this, true, "SN Gate");
+        northEntranceGate = new Gate(mc, 1, this, true, "NN Gate");
+        eastExitGate = new Gate(mc, 2, this, false, "EX Gate");
+        westExitGate = new Gate(mc, 3, this, false, "WX Gate");
     }
 
     /**
@@ -65,6 +78,19 @@ public class Museum {
         } else {
             System.out.println("Out of tickets, purchase rejected!");
         }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                mc.getTicketRemainingText().setText(Integer.toString(remainingTickets));
+            }
+        });
+        int ticketSold = availableTickets - remainingTickets;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                mc.getTicketSoldText().setText(Integer.toString(ticketSold));
+            }
+        });
         System.out.println("Remaining tickets: " + remainingTickets);
     }
 
@@ -100,13 +126,31 @@ public class Museum {
      * @return void
      */
     public synchronized void enterMuseum(Visitor visitor, Turnstile turnstile) {
-        if (visitorController.size() < visitorsAtOnce) {
-            visitorController.add(visitor);
-            visitor.isInside = true;
-            visitor.hasEntered();
-            System.out.printf("%04d Ticket %s purchased at %04d entered the museum through T" + (turnstile.getTurnstileNum() + 1) + " " + turnstile.getGateName() + ", staying for " + visitor.getDuration() + " minutes. Current Visitors inside the Museum (enter): %d\n", clock.getCurrentTime(), visitor.getTicketID(), visitor.ticket.getPurchaseTimeStamp(), visitorController.size());
-            turnstile.getWaitingVisitors().poll();
+
+        if (!isClosed){
+            if (visitorController.size() < visitorsAtOnce) {
+                visitorController.add(visitor);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        String sizeInt = Integer.toString(visitorController.size());
+                        mc.getVisitorsCountText().setText(sizeInt);
+                        mc.addMuseumList(visitor.getTicketID()+" (Purchased at "+String.format("%04d",visitor.getTicketTimeStamp())+", staying for "+ visitor.getDuration()+" minutes)");
+                    }
+                });
+
+                visitor.isInside = true;
+                visitor.hasEntered();
+                System.out.printf("%04d Ticket %s purchased at %04d entered the museum through T" + (turnstile.getTurnstileNum() + 1) + " " + turnstile.getGateName() + ", staying for " + visitor.getDuration() + " minutes. Current Visitors inside the Museum (enter): %d\n", clock.getCurrentTime(), visitor.getTicketID(), visitor.ticket.getPurchaseTimeStamp(), visitorController.size());
+            }
         }
+        turnstile.getWaitingVisitors().poll();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                mc.removeTurnstileList(visitor.getTicketID(), turnstile.getGateIndex(), turnstile.getTurnstileIndex());
+            }
+        });
     }
 
     /**
@@ -129,6 +173,13 @@ public class Museum {
             System.out.println("Museum is clear, remaining number of visitors in the museum: " +
                     visitorController.size());
         }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String sizeInt = Integer.toString(visitorController.size());
+                mc.getVisitorsCountText().setText(sizeInt);
+            }
+        });
     }
 
     /**

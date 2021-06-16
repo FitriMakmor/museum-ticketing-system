@@ -1,10 +1,16 @@
 package com.company;
 
+import com.company.controllers.MonitorController;
+import javafx.application.Platform;
+
 public class Clock implements Runnable {
     private int currentTime;
     private int endTime;
+    private MonitorController mc;
 
-    public Clock(int startTime, int closeTime) {
+
+    public Clock(MonitorController mc, int startTime, int closeTime) {
+        this.mc = mc;
         currentTime = startTime;
         endTime = closeTime + 200; /** 2 hours after museum closing time */
     }
@@ -17,7 +23,7 @@ public class Clock implements Runnable {
      */
     @Override
     public void run() {
-        while (currentTime < endTime) {
+        while (true) {
             try {
                 Thread.sleep(100);
                 if (currentTime % 100 < 59) {
@@ -25,6 +31,12 @@ public class Clock implements Runnable {
                 } else {
                     currentTime += 41;
                 }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        mc.getClockText().setText(String.format("%02d", currentTime/100)+":"+String.format("%02d", currentTime%100));
+                    }
+                });
             } catch (InterruptedException ex) {
                 break;
             }

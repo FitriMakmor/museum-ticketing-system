@@ -1,8 +1,12 @@
 package com.company;
 
+import com.company.controllers.MonitorController;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
 import java.util.Random;
 
-public class Main {
+public class MuseumMain{
 
     /**
      * Driver method to:
@@ -10,24 +14,29 @@ public class Main {
      * 2. Create the Museum instance.
      * 3. Run loop which constantly attempts to perform ticket transactions while checking whether the museum has reached closing time.
      * 4. Inform that the museum has been closed.
-     * @param args
+     * @param mc
+     * @param startTime
+     * @param openTime
+     * @param closeTime
+     * @param maxVisitors
+     * @param maxAt
      */
+    public MuseumMain(MonitorController mc, String startTime, String openTime, String closeTime, String maxVisitors, String maxAt) {
 
-    public static void main(String[] args) {
+        final int START_TIME = Integer.parseInt(startTime);
+        final int OPEN_TIME = Integer.parseInt(openTime);
+        final int CLOSE_TIME = Integer.parseInt(closeTime);
+        final int MAX_VISITORS = Integer.parseInt(maxVisitors);
+        final int MAX_AT_ONCE = Integer.parseInt(maxAt);
 
-        final int START_TIME = 800;
-        final int OPEN_TIME = 900;
-        final int CLOSE_TIME = 1800;
-        final int MAX_VISITORS = 900;
-        final int MAX_AT_ONCE = 100;
-
-        Museum museum = new Museum(START_TIME, CLOSE_TIME, MAX_VISITORS, MAX_AT_ONCE);
+        Museum museum = new Museum(mc, START_TIME, CLOSE_TIME, MAX_VISITORS, MAX_AT_ONCE);
 
         Random r = new Random();
 
         boolean gatesOpened = false;
         while (museum.getCurrentTime() < CLOSE_TIME) {
             try {
+//                mc.getTicketRemainingText().setText(Integer.toString(museum.getRemainingTickets()));
                 if (museum.getRemainingTickets() > 0) {
                     if (museum.getCurrentTime() >= OPEN_TIME && gatesOpened == false) {
                         museum.openGates();
@@ -46,6 +55,8 @@ public class Main {
                 ex.printStackTrace();
             }
         }
+
+//        mc.getTicketRemainingText().setText(Integer.toString(museum.getRemainingTickets()));
 
         if (museum.getCurrentTime() >= CLOSE_TIME) {
             System.out.print("Museum has been closed!");
